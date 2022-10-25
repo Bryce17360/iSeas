@@ -1,5 +1,6 @@
 package com.bryce.iseas.rowmapper;
 
+import com.bryce.iseas.constant.ProductCategory;
 import com.bryce.iseas.model.Product;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -14,7 +15,12 @@ public class ProductRowMapper implements RowMapper<Product> {
 
         product.setProductId(resultSet.getInt("product_id"));
         product.setProductName(resultSet.getString("product_name"));
-        product.setCategory(resultSet.getString("category"));
+
+        String categoryStr = resultSet.getString("category");
+        ProductCategory category = ProductCategory.valueOf(categoryStr);
+        product.setCategory(category);
+//        product.setCategory(ProductCategory.valueOf(resultSet.getString("category"))); 這寫法更優 比上面優
+
         product.setImageUrl(resultSet.getString("image_url"));
         product.setPrice(resultSet.getInt("price"));
         product.setStock(resultSet.getInt("stock"));
